@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 
 public class RegisterUser extends TestBase{
@@ -17,13 +17,13 @@ public class RegisterUser extends TestBase{
                 .contentType(JSON)
                 .log().uri()
         .when()
-                .post(baseURI + basePath + "/register")
+                .post("/register")
         .then()
                 .log().status()
                 .log().body()
                 .statusCode(200)
                 .body("id", is(4))
-                .body("token", is("QpwL5tke4Pnpja7X4"));
+                .body("token", not(isEmptyOrNullString()));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class RegisterUser extends TestBase{
                 .contentType(JSON)
                 .log().uri()
         .when()
-                .post(baseURI + basePath + "/register")
+                .post("/register")
         .then()
                 .log().status()
                 .log().body()

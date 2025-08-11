@@ -13,7 +13,7 @@ public class DeleteUsers extends TestBase{
                 .contentType(JSON)
                 .log().uri()
         .when()
-                .delete(baseURI + basePath + "/users/2")
+                .delete("/users/2")
         .then()
                 .log().status()
                 .log().body()

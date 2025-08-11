@@ -12,8 +12,9 @@ public class GetUsers extends TestBase{
     @Test
     void successfulSingleUserTest() {
         given()
+                .header("x-api-key", apiKey)
                 .log().uri()
-                .get(baseURI + basePath + "/users/2")
+                .get("/users/2")
                 .then()
                 .log().status()
                 .log().body()

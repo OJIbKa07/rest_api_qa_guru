@@ -24,7 +24,7 @@ public class UpdateUser extends TestBase {
                 .contentType(JSON)
                 .log().uri()
         .when()
-                .put(baseURI + basePath + "/users/2")
+                .put("/users/2")
         .then()
                 .log().status()
                 .log().body()
