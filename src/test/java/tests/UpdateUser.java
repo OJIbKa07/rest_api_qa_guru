@@ -1,7 +1,6 @@
 package tests;
 
-import models.lombok.RegisterBodyLombokModel;
-import models.lombok.RegisterResponseLombokModel;
+import models.lombok.UpdateDateResponseLombokModel;
 import models.lombok.UpdateUserBodyLombokModel;
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +8,13 @@ import java.time.LocalDate;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
-import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static specs.LoginSpec.loginRequestSpec;
-import static specs.LoginSpec.loginResponseSpec;
+import static specs.RequestSpec.*;
+import static specs.ResponseSpec.responseSpec;
 
 public class UpdateUser extends TestBase {
 
@@ -28,15 +26,15 @@ public class UpdateUser extends TestBase {
         updateData.setJob("zion resident");
         updateData.setUpdatedAt(LocalDate.now().toString());
 
-        UpdateUserBodyLombokModel response = step("Make request", () ->
-                given(loginRequestSpec)
+        UpdateDateResponseLombokModel response = step("Make request", () ->
+                given(requestSpec)
                         .body(updateData)
                 .when()
                         .put("/users/2")
                 .then()
-                        .spec(loginResponseSpec)
+                        .spec(responseSpec(200))
                         .extract()
-                        .as(UpdateUserBodyLombokModel.class)
+                        .as(UpdateDateResponseLombokModel.class)
         );
 
         step("Check response", () -> {

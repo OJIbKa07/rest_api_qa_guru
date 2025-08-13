@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
-import static io.restassured.http.ContentType.JSON;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static specs.LoginSpec.*;
+import static specs.RequestSpec.*;
+import static specs.ResponseSpec.responseSpec;
 
 
 public class RegisterUser extends TestBase{
@@ -21,12 +20,12 @@ public class RegisterUser extends TestBase{
         regData.setPassword("pistol");
 
         RegisterResponseLombokModel response = step("Make request", () ->
-                given(loginRequestSpec)
+                given(requestSpec)
                         .body(regData)
                 .when()
                         .post("/register")
                 .then()
-                        .spec(loginResponseSpec)
+                        .spec(responseSpec(200))
                         .extract()
                         .as(RegisterResponseLombokModel.class)
         );
@@ -43,12 +42,12 @@ public class RegisterUser extends TestBase{
         authData.setEmail("sydney@fife");
 
         UnsuccessfulLoginResponseLobmokModel response = step("Make request", () ->
-                given(loginRequestSpec)
+                given(requestSpec)
                         .body(authData)
                 .when()
                         .post("/register")
                 .then()
-                        .spec(unsuccessfulLoginResponseSpec)
+                        .spec(responseSpec(400))
                         .extract()
                         .as(UnsuccessfulLoginResponseLobmokModel.class)
         );

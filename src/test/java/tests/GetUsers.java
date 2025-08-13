@@ -2,12 +2,12 @@ package tests;
 
 import models.lombok.UsersResponseLombokModel;
 import org.junit.jupiter.api.Test;
-import tests.TestBase;
 
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.LoginSpec.*;
+import static specs.RequestSpec.*;
+import static specs.ResponseSpec.responseSpec;
 
 public class GetUsers extends TestBase {
 
@@ -18,10 +18,10 @@ public class GetUsers extends TestBase {
     @Test
     void successfulSingleUserTest() {
         UsersResponseLombokModel response = step("Make request", ()->
-                given(loginRequestSpec)
+                given(requestSpec)
                         .get("/users/2")
                         .then()
-                        .spec(loginResponseSpec)
+                        .spec(responseSpec(200))
                         .extract()
                         .as(UsersResponseLombokModel.class));
 
